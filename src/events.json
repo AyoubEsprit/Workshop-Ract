@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Tech Event",
+    "description": "Event technologique",
+    "img": "event1.jpg",
+    "price": 30,
+    "nbTickets": 20,
+    "nbParticipants": 5,
+    "like": false
+  },
+  {
+    "id": 2,
+    "name": "Music Event",
+    "description": "Concert live",
+    "img": "event2.jpg",
+    "price": 40,
+    "nbTickets": 0,
+    "nbParticipants": 50,
+    "like": true
+  }
+]
