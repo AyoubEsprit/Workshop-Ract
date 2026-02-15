@@ -64,7 +64,7 @@ function Events() {
         </Alert>
       )}
 
-      <Row>
+      <Row className="justify-content-center">
         {events.map((e) => (
           <Event
             key={e.id}

@@ -1,6 +1,7 @@
 import { Card, Col, Button } from "react-bootstrap";
 import event1 from "../assets/event1.jpg";
 import event2 from "../assets/event2.jpg";
+import { Link } from "react-router-dom";
 
 const images = {
   "event1.jpg": event1,
@@ -28,7 +29,12 @@ function Event({
           style={{ height: "180px", objectFit: "cover" }}
         />
         <Card.Body>
-          <Card.Title>{name}</Card.Title>
+          <Card.Title>
+  <Link to={`/events/${name}`} style={{ textDecoration: "none" }}>
+    {name}
+  </Link>
+</Card.Title>
+
           <Card.Text>{description}</Card.Text>
           <Card.Text>Price : {price}</Card.Text>
           <Card.Text>Tickets : {nbTickets}</Card.Text>
