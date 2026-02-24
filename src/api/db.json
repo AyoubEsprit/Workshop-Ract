@@ -1,0 +1,14 @@
+{
+  "events": [
+    {
+      "id": "2",
+      "name": "Music Event",
+      "description": "Concert live",
+      "price": 40,
+      "nbTickets": "80",
+      "nbParticipants": 2,
+      "img": "event2.jpg",
+      "like": false
+    }
+  ]
+}

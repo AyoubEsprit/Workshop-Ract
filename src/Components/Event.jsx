@@ -19,21 +19,23 @@ function Event({
   like,
   buy,
   toggleLike,
+  onDelete,
 }) {
   return (
     <Col md={6} className="mb-4 d-flex justify-content-center">
       <Card style={{ maxWidth: "350px" }}>
         <Card.Img
           variant="top"
-          src={images[img]}
+          src={images[img] || event1}
           style={{ height: "180px", objectFit: "cover" }}
         />
+
         <Card.Body>
           <Card.Title>
-  <Link to={`/events/${name}`} style={{ textDecoration: "none" }}>
-    {name}
-  </Link>
-</Card.Title>
+            <Link to={`/events/${id}`} style={{ textDecoration: "none" }}>
+              {name}
+            </Link>
+          </Card.Title>
 
           <Card.Text>{description}</Card.Text>
           <Card.Text>Price : {price}</Card.Text>
@@ -46,14 +48,31 @@ function Event({
             onClick={() => buy(id)}
             className="me-2"
           >
-            {nbTickets === 0 ? "Sold Out" : "Book an event"}
+            {nbTickets === 0 ? "Sold Out" : "Book"}
           </Button>
 
           <Button
             variant={like ? "danger" : "outline-danger"}
             onClick={() => toggleLike(id)}
+            className="me-2"
           >
             {like ? "Dislike" : "Like"}
+          </Button>
+
+          <Button
+            variant="danger"
+            onClick={() => onDelete(id)}
+            className="me-2"
+          >
+            Delete
+          </Button>
+
+          <Button
+            variant="warning"
+            as={Link}
+            to={`/update/${id}`}
+          >
+            Update
           </Button>
         </Card.Body>
       </Card>

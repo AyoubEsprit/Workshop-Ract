@@ -12,6 +12,9 @@ function NavigationBar() {
         <Nav.Link as={NavLink} to="/events">
           Events
         </Nav.Link>
+        <Nav.Link as={NavLink} to="/add">
+         Add New Event
+        </Nav.Link>
       </Nav>
     </Navbar>
   );

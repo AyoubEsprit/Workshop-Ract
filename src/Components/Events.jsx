@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
 import { Row, Alert } from "react-bootstrap";
 import Event from "./Event";
-import eventsData from "../events.json";
+import { getAllEvents, deleteEvent } from "../service/api";
+import { updateEvent } from "../service/api";
 
 function Events() {
-  const [events, setEvents] = useState(eventsData);
+  const [events, setEvents] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
 
-  // Cycle de vie : montage
+  // 🔵 Charger les événements depuis l'API
   useEffect(() => {
     console.log("Composant monté");
+
+    loadEvents();
 
     setTimeout(() => {
       setShowWelcome(true);
@@ -25,42 +28,56 @@ function Events() {
     };
   }, []);
 
-  // Fonction Book
-  const buy = (id) => {
-    setEvents(
-      events.map((e) =>
-        e.id === id && e.nbTickets > 0
-          ? {
-              ...e,
-              nbParticipants: e.nbParticipants + 1,
-              nbTickets: e.nbTickets - 1,
-            }
-          : e
-      )
-    );
-
-    setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 2000);
+  // 🔵 Fonction pour charger la liste
+  const loadEvents = async () => {
+    try {
+      const response = await getAllEvents();
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Erreur lors du chargement :", error);
+    }
   };
 
-  // Fonction Like / Dislike
-  const toggleLike = (id) => {
-    setEvents(
-      events.map((e) =>
-        e.id === id ? { ...e, like: !e.like } : e
-      )
-    );
+  // 🔴 Fonction Delete
+  const handleDelete = async (id) => {
+    try {
+      await deleteEvent(id);
+      loadEvents(); // recharger après suppression
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 2000);
+    } catch (error) {
+      console.error("Erreur suppression :", error);
+    }
   };
+  // 🟢 Fonction Update
+  const toggleLike = async (id) => {
+  try {
+    const eventToUpdate = events.find((e) => e.id === id);
+
+    const updatedEvent = {
+      ...eventToUpdate,
+      like: !eventToUpdate.like,
+    };
+
+    await updateEvent(id, updatedEvent);
+    loadEvents();
+  } catch (error) {
+    console.error("Erreur Like :", error);
+  }
+};
+
 
   return (
     <>
       {showWelcome && (
-        <Alert variant="info">Bienvenue dans la gestion des événements</Alert>
+        <Alert variant="info">
+          Bienvenue dans la gestion des événements
+        </Alert>
       )}
 
       {showAlert && (
         <Alert variant="success">
-          You have booked an event
+          Opération réussie
         </Alert>
       )}
 
@@ -69,8 +86,7 @@ function Events() {
           <Event
             key={e.id}
             {...e}
-            buy={buy}
-            toggleLike={toggleLike}
+            onDelete={handleDelete}
           />
         ))}
       </Row>

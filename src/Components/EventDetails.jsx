@@ -1,25 +1,41 @@
 import { useParams } from "react-router-dom";
-import eventsData from "../events.json";
+import { useEffect, useState } from "react";
+import { getEventById } from "../service/api";
+import { Card, Container } from "react-bootstrap";
 
 function EventDetails() {
-  const { eventName } = useParams();
+  const { id } = useParams();
+  const [event, setEvent] = useState(null);
 
-  const event = eventsData.find(
-    (e) => e.name === eventName
-  );
+  useEffect(() => {
+    const loadEvent = async () => {
+      try {
+        const response = await getEventById(id);
+        setEvent(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadEvent();
+  }, [id]);
 
   if (!event) {
-    return <h2>Event not found</h2>;
+    return <h2 className="text-center mt-4">Loading...</h2>;
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>{event.name}</h2>
-      <p>{event.description}</p>
-      <p>Price: {event.price}</p>
-      <p>Tickets: {event.nbTickets}</p>
-      <p>Participants: {event.nbParticipants}</p>
-    </div>
+    <Container className="mt-4 d-flex justify-content-center">
+      <Card style={{ width: "400px" }}>
+        <Card.Body>
+          <Card.Title>{event.name}</Card.Title>
+          <Card.Text>{event.description}</Card.Text>
+          <Card.Text>Price: {event.price}</Card.Text>
+          <Card.Text>Tickets: {event.nbTickets}</Card.Text>
+          <Card.Text>Participants: {event.nbParticipants}</Card.Text>
+        </Card.Body>
+      </Card>
+    </Container>
   );
 }
 
