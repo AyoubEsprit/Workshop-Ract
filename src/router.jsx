@@ -1,15 +1,12 @@
-// router.jsx
-
 import { createBrowserRouter } from "react-router-dom";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 import RootLayout from "./layouts/RootLayout";
 import AddEvent from "./Components/AddEvent";
 import UpdateEvent from "./Components/UpdateEvent";
 
 const Events = lazy(() => import("./Components/Events"));
-const EventDetails = lazy(() => import("./components/EventDetails"));
-const NotFound = lazy(() => import("./components/NotFound"));
-
+const EventDetails = lazy(() => import("./Components/EventDetails"));
+const NotFound = lazy(() => import("./Components/NotFound"));
 
 const router = createBrowserRouter([
   {
@@ -18,27 +15,43 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Events />,
+        element: (
+          <Suspense fallback={<h2>Loading...</h2>}>
+            <Events />
+          </Suspense>
+        ),
       },
       {
         path: "events",
-        element: <Events />,
+        element: (
+          <Suspense fallback={<h2>Loading...</h2>}>
+            <Events />
+          </Suspense>
+        ),
       },
       {
-  path: "events/:id",
-  element: <EventDetails />
-},
+        path: "events/:id",
+        element: (
+          <Suspense fallback={<h2>Loading...</h2>}>
+            <EventDetails />
+          </Suspense>
+        ),
+      },
       {
         path: "add",
-        element: <AddEvent />
+        element: <AddEvent />,
       },
       {
-  path: "update/:id",
-  element: <UpdateEvent />
-},
+        path: "update/:id",
+        element: <UpdateEvent />,
+      },
       {
         path: "*",
-        element: <NotFound />,
+        element: (
+          <Suspense fallback={<h2>Loading...</h2>}>
+            <NotFound />
+          </Suspense>
+        ),
       },
     ],
   },

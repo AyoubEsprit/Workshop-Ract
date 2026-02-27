@@ -8,20 +8,20 @@ function EventDetails() {
   const [event, setEvent] = useState(null);
 
   useEffect(() => {
-    const loadEvent = async () => {
-      try {
-        const response = await getEventById(id);
-        setEvent(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     loadEvent();
   }, [id]);
 
+  const loadEvent = async () => {
+    try {
+      const response = await getEventById(id);
+      setEvent(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (!event) {
-    return <h2 className="text-center mt-4">Loading...</h2>;
+    return <h2 className="text-center mt-4">Event does not exist</h2>;
   }
 
   return (

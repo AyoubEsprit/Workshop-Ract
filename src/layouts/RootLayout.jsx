@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
-import NavigationBar from "../components/Navbar";
+import NavigationBar from "../Components/Navbar";
 import { Container } from "react-bootstrap";
 
 function RootLayout() {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getEventById, updateEvent } from "../service/api.jsx";
+import { getEventById, updateEvent } from "../service/api";
 import { Form, Button, Container } from "react-bootstrap";
 
 function UpdateEvent() {
@@ -21,12 +21,8 @@ function UpdateEvent() {
   }, []);
 
   const loadEvent = async () => {
-    try {
-      const response = await getEventById(id);
-      setEvent(response.data);
-    } catch (error) {
-      console.error("Erreur chargement :", error);
-    }
+    const response = await getEventById(id);
+    setEvent(response.data);
   };
 
   const handleChange = (e) => {
@@ -38,12 +34,8 @@ function UpdateEvent() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await updateEvent(id, event);
-      navigate("/events");
-    } catch (error) {
-      console.error("Erreur modification :", error);
-    }
+    await updateEvent(id, event);
+    navigate("/events");
   };
 
   return (

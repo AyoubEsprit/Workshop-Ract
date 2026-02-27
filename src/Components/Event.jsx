@@ -17,10 +17,10 @@ function Event({
   nbParticipants,
   img,
   like,
-  buy,
-  toggleLike,
   onDelete,
+  toggleLike
 }) {
+
   return (
     <Col md={6} className="mb-4 d-flex justify-content-center">
       <Card style={{ maxWidth: "350px" }}>
@@ -41,15 +41,6 @@ function Event({
           <Card.Text>Price : {price}</Card.Text>
           <Card.Text>Tickets : {nbTickets}</Card.Text>
           <Card.Text>Participants : {nbParticipants}</Card.Text>
-
-          <Button
-            variant={nbTickets === 0 ? "secondary" : "primary"}
-            disabled={nbTickets === 0}
-            onClick={() => buy(id)}
-            className="me-2"
-          >
-            {nbTickets === 0 ? "Sold Out" : "Book"}
-          </Button>
 
           <Button
             variant={like ? "danger" : "outline-danger"}
